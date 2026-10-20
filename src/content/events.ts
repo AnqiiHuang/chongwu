@@ -2,7 +2,8 @@ import { LATER_TEMPLATES } from './laterEvents';
 import { cashDelta, describeEffects, emptyEffects, finishEffects, fx, quoteExpense, quoteRevenue } from '../game/effects';
 import { availableQty } from '../game/economy';
 import { nextRng } from '../game/rng';
-import { isOpeningDay, onDuty, timeLabel } from '../game/time';
+import { staffGate } from '../game/roster';
+import { isOpeningDay, timeLabel } from '../game/time';
 import type { ActionCategory, ActiveEvent, Effects, GameState } from '../game/types';
 
 export interface PrepCtx {
@@ -13,7 +14,7 @@ export interface PrepCtx {
 
 interface ChoiceTemplate {
   id: string;
-  label: string;
+  label: string | ((ctx: PrepCtx) => string);
   preview: (ctx: PrepCtx) => string;
   requires?: (ctx: PrepCtx) => string | null;
   resolve: (ctx: PrepCtx) => { resultText: string; effects: Effects };
@@ -56,8 +57,7 @@ function needItem(ctx: PrepCtx, itemId: string, name: string): string | null {
 }
 
 function needStaff(ctx: PrepCtx, employeeId: string, label: string): string | null {
-  if (!onDuty(employeeId, ctx.state.actionIndex)) return `${label}这个时段不在店里，可以改选不需要当班员工的办法。`;
-  return null;
+  return staffGate(ctx.state, employeeId, label, ctx.state.actionIndex);
 }
 
 function guest(
@@ -287,8 +287,10 @@ const TEMPLATES: EventTemplate[] = [
     characterId: 'su_tao',
     petId: 'naipao',
     coach: null,
-    description: () =>
-      '奶泡盯着窗台，又把头转开。那里只有一块折着的棉布。它没有过来求抱。美容师苏桃如果还在班，可以把护理角的东西分得更清楚。',
+    description: (state) =>
+      state.employees.su_tao
+        ? '奶泡盯着窗台，又把头转开。那里只有一块折着的棉布。它没有过来求抱。美容师苏桃如果还在班，可以把护理角的东西分得更清楚。'
+        : '奶泡盯着窗台，又把头转开。那里只有一块折着的棉布。它没有过来求抱。苏桃没有加入这家店，梳子和毛巾由你自己分开。',
     choices: [
       {
         id: 'cushion',
@@ -347,10 +349,12 @@ const TEMPLATES: EventTemplate[] = [
     choices: [
       {
         id: 'deposit',
-        label: '约到明天林序在岗的时段，先收订金',
+        label: (ctx) => (ctx.state.employees.lin_xu ? '约到明天林序在岗的时段，先收订金' : '先收订金，明天由店主做基础修甲'),
         preview: () => '订金 20 · 今天不算完成服务',
-        resolve: () => ({
-          resultText: '你写下明天上午的修甲。订金先放着，指甲还没剪，所以不算进今天的营业额。',
+        resolve: (ctx) => ({
+          resultText: ctx.state.employees.lin_xu
+            ? '你写下明天林序班次里的修甲。订金先放着，指甲还没剪，所以不算进今天的营业额。'
+            : '林序不在这家店。你把基础修甲记在店主方便的时候。订金先放着，指甲还没剪，所以不算进今天的营业额。',
           effects: fx({
             deposits: 20,
             visitors: 1,
@@ -1481,7 +1485,8 @@ const TEMPLATES: EventTemplate[] = [
     description: (state) => {
       const food = state.inventory.find((batch) => batch.itemId === 'food_cat');
       const hint = food ? '猫主粮还在架子上。' : '猫主粮的位置空着。';
-      return `关门前的空档，林序如果在，可以一起看货架；不在也没关系。${hint}奶泡只是在自己的位置上，没有来翻袋子。食品和玩具分开放着。`;
+      const carer = state.employees.lin_xu ? '林序如果在，可以一起看货架；不在也没关系。' : '林序没有加入这家店，照护记录由店主来写。';
+      return `关门前的空档，${carer}${hint}奶泡只是在自己的位置上，没有来翻袋子。食品和玩具分开放着。`;
     },
     choices: [
       {
@@ -1742,7 +1747,7 @@ export function prepareEvent(state: GameState, templateId: string): { event: Act
     const changes = disabledReason ? [] : [...describeEffects(effects), '经验 +6'];
     return {
       id: choice.id,
-      label: choice.label,
+      label: typeof choice.label === 'function' ? choice.label(ctx) : choice.label,
       preview,
       disabledReason,
       resultText: resolved.resultText,

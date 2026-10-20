@@ -1,6 +1,6 @@
 import { fx, quoteRevenue } from '../game/effects';
 import { availableQty } from '../game/economy';
-import { onDuty } from '../game/time';
+import { staffGate } from '../game/roster';
 import type { Effects, GameState } from '../game/types';
 import type { EventTemplate, PrepCtx } from './events';
 
@@ -17,9 +17,7 @@ function needItem(ctx: PrepCtx, itemId: string, name: string): string | null {
 }
 
 function needStaff(ctx: PrepCtx, employeeId: string, label: string): string | null {
-  if (!onDuty(employeeId, ctx.state.actionIndex)) return `${label}这个时段不在店里，可以改选不需要当班员工的办法。`;
-  if (ctx.state.employees[employeeId]?.trainedToday) return `${label}今天在培训，不能同时做这项服务。`;
-  return null;
+  return staffGate(ctx.state, employeeId, label, ctx.state.actionIndex, true);
 }
 
 function guest(id: string, affinity: number, extra: { preference?: string; lastPurchase?: string; taboo?: string } = {}): Effects['customers'][number] {
@@ -738,8 +736,10 @@ export const LATER_TEMPLATES: EventTemplate[] = [
     petId: 'doubao',
     coach: null,
     when: (state) => !!state.storyFlags.nail_appointment || (state.customers.liang?.visits ?? 0) > 0,
-    description: () =>
-      '梁老师又来了，豆豆这次没有喘气，可它还是先去闻纸袋。「如果林序在，可以剪。不在的话，我们就再约，不找已经下班的人临时回来。」',
+    description: (state) =>
+      state.employees.lin_xu
+        ? '梁老师又来了，豆豆这次没有喘气，可它还是先去闻纸袋。「如果林序在，可以剪。不在的话，我们就再约，不找已经下班的人临时回来。」'
+        : '梁老师又来了，豆豆这次没有喘气，可它还是先去闻纸袋。「店里没有护理员的话，基础修甲由店主来，不把没入职的人写进班表。」',
     choices: [
       {
         id: 'trim',
@@ -763,14 +763,16 @@ export const LATER_TEMPLATES: EventTemplate[] = [
       },
       {
         id: 'book',
-        label: '林序不在就改约，不叫别人顶上',
+        label: '今天不剪，改到能做基础修甲的时候',
         preview: () => '改时间 · 不消耗行动以外的东西',
-        resolve: () => ({
-          resultText: '你把时间改到林序的班次里。豆豆今天只是喝了水。没有人在美容师下班后把她叫回来。',
+        resolve: (ctx) => ({
+          resultText: ctx.state.employees.lin_xu
+            ? '你把时间改到林序的班次里。豆豆今天只是喝了水。没有把已经下班的人叫回来。'
+            : '林序不在这家店。你把基础修甲记在店主方便的时候。豆豆今天只是喝了水。',
           effects: fx({
             visitors: 1,
             flags: ['nail_appointment'],
-            customers: [guest('liang', 3, { preference: '修甲等林序在岗' })],
+            customers: [guest('liang', 3, { preference: ctx.state.employees.lin_xu ? '修甲等林序在岗' : '基础修甲由店主来做' })],
           }),
         }),
       },

@@ -1,0 +1,2619 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-20",
+  "coordinateSystem": "original image pixels; rect is x,y,w,h; paths relative to this package",
+  "notes": [
+    "PNG files are copied unchanged from generation output.",
+    "Frame rectangles are initial visible bounds; verify edges at intended display scale.",
+    "Wardrobe frames are NOT rig-aligned. Calibrate transforms on the owner base.",
+    "No walking animation frames or layered furniture masks are included."
+  ],
+  "images": {
+    "owner_default": {
+      "imagePath": "assets/characters/owner_default.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "a8ab380425311fd82ab2ebc644465654dd78d40b24d0fa00726c9c4abc49e708"
+    },
+    "staff_sutao": {
+      "imagePath": "assets/characters/staff_sutao.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "0d010af3234bbe420d9b16a77e7697ee4fd126ebc0b2d6d7e15d11847fe82fb5"
+    },
+    "staff_linxu": {
+      "imagePath": "assets/characters/staff_linxu.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "16cccffe8f0ac00bae37a80386283bded3d54fd27ecec84f797e8e9a9184681d"
+    },
+    "staff_tangli": {
+      "imagePath": "assets/characters/staff_tangli.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "5a07e5d55974ec9782ae30956a415ccc0b685784a6a3b2f2271db740b11ba3b1"
+    },
+    "npc_neighbors": {
+      "imagePath": "assets/characters/npc_neighbors.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "0b7cff1cf83ec68103b7b78a1b1c7230563bd8bcd56064f2e4ecb71604178cc2"
+    },
+    "npc_families": {
+      "imagePath": "assets/characters/npc_families.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "f24a4256ad6f4015b4c03af6e53647f28cfb108a7f7f5b121046e783cc8b11dd"
+    },
+    "npc_community": {
+      "imagePath": "assets/characters/npc_community.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "436d98780196401ac5b01a0cc9d23747e02a5ac0a66feb6d004010efb0b0eaf6"
+    },
+    "pet_dahuang": {
+      "imagePath": "assets/pets/pet_dahuang.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "1a91892e458018dbea61f6b3e14a39baf7509aa671d3df65d0395c271fabf813"
+    },
+    "pets_shop_cats_dog": {
+      "imagePath": "assets/pets/pets_shop_cats_dog.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "3c006abe3b3d45b0ef331794cbf34b96af3c1489434d426a109bb63793d810df"
+    },
+    "pets_small_animals": {
+      "imagePath": "assets/pets/pets_small_animals.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "8de1b57d6bcf53bce6d4e8b40192f39bd9be69454b6b6b4ef46a8ee308d98a2d"
+    },
+    "pets_visitors": {
+      "imagePath": "assets/pets/pets_visitors.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "518d911ff58db217e31b75c5b7cf72ae3918c05bbc3b04949fbb0231f8de348e"
+    },
+    "owner_base": {
+      "imagePath": "assets/customization/owner_base.png",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "c503c1b3f2155f3002667266b1b34ce083edd66964766cfc03ec5f72e7421bc4"
+    },
+    "owner_wardrobe": {
+      "imagePath": "assets/customization/owner_wardrobe.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "transparent": true,
+      "sha256": "dc6bf4b2a2f035060bccb9e0f6524b6a214f82a834db8b2b8e7f33516de1f556"
+    },
+    "shop_interiors_six": {
+      "imagePath": "assets/scenes/shop_interiors_six.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "transparent": false,
+      "sha256": "f43ffebc92df367da5e3eef6aec342e6901864f29558dae95bfb7a90f97ec949"
+    },
+    "locations_four": {
+      "imagePath": "assets/scenes/locations_four.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "transparent": false,
+      "sha256": "1b0b67841ec8a4efe4bf6e5b459c8276009f91420b743814157b9456163fed95"
+    },
+    "opening_street": {
+      "imagePath": "assets/scenes/opening_street.png",
+      "width": 2172,
+      "height": 724,
+      "mode": "RGB",
+      "transparent": false,
+      "sha256": "fc1ffcea63be2c2cb59a2b5892c3ad5b74e8770bdc299f2854357e0d393da7a8"
+    }
+  },
+  "frames": {
+    "owner.front": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 104,
+        "y": 4,
+        "w": 235,
+        "h": 486
+      },
+      "entityId": "owner",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "owner.side": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 518,
+        "y": 5,
+        "w": 219,
+        "h": 485
+      },
+      "entityId": "owner",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "owner.back": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 922,
+        "y": 4,
+        "w": 228,
+        "h": 486
+      },
+      "entityId": "owner",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "owner.neutral": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 40,
+        "y": 504,
+        "w": 352,
+        "h": 362
+      },
+      "entityId": "owner",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "owner.happy": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 449,
+        "y": 505,
+        "w": 353,
+        "h": 361
+      },
+      "entityId": "owner",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "owner.worried": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 863,
+        "y": 505,
+        "w": 352,
+        "h": 358
+      },
+      "entityId": "owner",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "owner.surprised": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 40,
+        "y": 866,
+        "w": 352,
+        "h": 363
+      },
+      "entityId": "owner",
+      "role": "surprised",
+      "reviewRequired": true
+    },
+    "owner.determined": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 451,
+        "y": 866,
+        "w": 353,
+        "h": 363
+      },
+      "entityId": "owner",
+      "role": "determined",
+      "reviewRequired": true
+    },
+    "owner.sleepy": {
+      "imageId": "owner_default",
+      "rect": {
+        "x": 861,
+        "y": 867,
+        "w": 352,
+        "h": 362
+      },
+      "entityId": "owner",
+      "role": "sleepy",
+      "reviewRequired": true
+    },
+    "sutao.front": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 108,
+        "y": 2,
+        "w": 227,
+        "h": 526
+      },
+      "entityId": "sutao",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "sutao.side": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 509,
+        "y": 8,
+        "w": 241,
+        "h": 520
+      },
+      "entityId": "sutao",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "sutao.back": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 934,
+        "y": 4,
+        "w": 215,
+        "h": 524
+      },
+      "entityId": "sutao",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "sutao.neutral": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 62,
+        "y": 533,
+        "w": 306,
+        "h": 358
+      },
+      "entityId": "sutao",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "sutao.happy": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 472,
+        "y": 533,
+        "w": 309,
+        "h": 358
+      },
+      "entityId": "sutao",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "sutao.worried": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 883,
+        "y": 533,
+        "w": 313,
+        "h": 359
+      },
+      "entityId": "sutao",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "sutao.surprised": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 57,
+        "y": 893,
+        "w": 316,
+        "h": 353
+      },
+      "entityId": "sutao",
+      "role": "surprised",
+      "reviewRequired": true
+    },
+    "sutao.determined": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 472,
+        "y": 897,
+        "w": 314,
+        "h": 350
+      },
+      "entityId": "sutao",
+      "role": "determined",
+      "reviewRequired": true
+    },
+    "sutao.sleepy": {
+      "imageId": "staff_sutao",
+      "rect": {
+        "x": 888,
+        "y": 893,
+        "w": 319,
+        "h": 353
+      },
+      "entityId": "sutao",
+      "role": "sleepy",
+      "reviewRequired": true
+    },
+    "linxu.front": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 126,
+        "y": 3,
+        "w": 211,
+        "h": 509
+      },
+      "entityId": "linxu",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "linxu.side": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 517,
+        "y": 5,
+        "w": 217,
+        "h": 507
+      },
+      "entityId": "linxu",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "linxu.back": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 918,
+        "y": 3,
+        "w": 214,
+        "h": 509
+      },
+      "entityId": "linxu",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "linxu.neutral": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 54,
+        "y": 518,
+        "w": 320,
+        "h": 352
+      },
+      "entityId": "linxu",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "linxu.happy": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 464,
+        "y": 520,
+        "w": 320,
+        "h": 350
+      },
+      "entityId": "linxu",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "linxu.worried": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 882,
+        "y": 519,
+        "w": 316,
+        "h": 351
+      },
+      "entityId": "linxu",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "linxu.surprised": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 55,
+        "y": 875,
+        "w": 314,
+        "h": 346
+      },
+      "entityId": "linxu",
+      "role": "surprised",
+      "reviewRequired": true
+    },
+    "linxu.determined": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 468,
+        "y": 879,
+        "w": 316,
+        "h": 342
+      },
+      "entityId": "linxu",
+      "role": "determined",
+      "reviewRequired": true
+    },
+    "linxu.sleepy": {
+      "imageId": "staff_linxu",
+      "rect": {
+        "x": 883,
+        "y": 876,
+        "w": 311,
+        "h": 345
+      },
+      "entityId": "linxu",
+      "role": "sleepy",
+      "reviewRequired": true
+    },
+    "tangli.front": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 97,
+        "y": 5,
+        "w": 256,
+        "h": 501
+      },
+      "entityId": "tangli",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "tangli.side": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 513,
+        "y": 2,
+        "w": 234,
+        "h": 506
+      },
+      "entityId": "tangli",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "tangli.back": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 918,
+        "y": 2,
+        "w": 237,
+        "h": 504
+      },
+      "entityId": "tangli",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "tangli.neutral": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 41,
+        "y": 512,
+        "w": 369,
+        "h": 360
+      },
+      "entityId": "tangli",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "tangli.happy": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 442,
+        "y": 516,
+        "w": 374,
+        "h": 356
+      },
+      "entityId": "tangli",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "tangli.worried": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 855,
+        "y": 514,
+        "w": 368,
+        "h": 358
+      },
+      "entityId": "tangli",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "tangli.surprised": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 32,
+        "y": 872,
+        "w": 372,
+        "h": 357
+      },
+      "entityId": "tangli",
+      "role": "surprised",
+      "reviewRequired": true
+    },
+    "tangli.determined": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 442,
+        "y": 872,
+        "w": 373,
+        "h": 358
+      },
+      "entityId": "tangli",
+      "role": "determined",
+      "reviewRequired": true
+    },
+    "tangli.sleepy": {
+      "imageId": "staff_tangli",
+      "rect": {
+        "x": 857,
+        "y": 872,
+        "w": 370,
+        "h": 359
+      },
+      "entityId": "tangli",
+      "role": "sleepy",
+      "reviewRequired": true
+    },
+    "dahuang.front": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 90,
+        "y": 44,
+        "w": 323,
+        "h": 453
+      },
+      "entityId": "dahuang",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "dahuang.side": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 476,
+        "y": 45,
+        "w": 356,
+        "h": 447
+      },
+      "entityId": "dahuang",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "dahuang.back": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 900,
+        "y": 44,
+        "w": 323,
+        "h": 452
+      },
+      "entityId": "dahuang",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "dahuang.neutral": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 51,
+        "y": 524,
+        "w": 359,
+        "h": 328
+      },
+      "entityId": "dahuang",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "dahuang.happy": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 451,
+        "y": 525,
+        "w": 352,
+        "h": 331
+      },
+      "entityId": "dahuang",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "dahuang.worried": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 864,
+        "y": 542,
+        "w": 353,
+        "h": 312
+      },
+      "entityId": "dahuang",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "dahuang.surprised": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 51,
+        "y": 873,
+        "w": 361,
+        "h": 332
+      },
+      "entityId": "dahuang",
+      "role": "surprised",
+      "reviewRequired": true
+    },
+    "dahuang.determined": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 453,
+        "y": 876,
+        "w": 357,
+        "h": 329
+      },
+      "entityId": "dahuang",
+      "role": "determined",
+      "reviewRequired": true
+    },
+    "dahuang.sleepy": {
+      "imageId": "pet_dahuang",
+      "rect": {
+        "x": 865,
+        "y": 891,
+        "w": 351,
+        "h": 314
+      },
+      "entityId": "dahuang",
+      "role": "sleepy",
+      "reviewRequired": true
+    },
+    "zhongyun.front": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 87,
+        "y": 5,
+        "w": 108,
+        "h": 252
+      },
+      "entityId": "zhongyun",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "zhongyun.side": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 319,
+        "y": 6,
+        "w": 114,
+        "h": 251
+      },
+      "entityId": "zhongyun",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "zhongyun.back": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 567,
+        "y": 5,
+        "w": 104,
+        "h": 252
+      },
+      "entityId": "zhongyun",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "zhongyun.neutral": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 779,
+        "y": 10,
+        "w": 203,
+        "h": 245
+      },
+      "entityId": "zhongyun",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "zhongyun.happy": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1047,
+        "y": 10,
+        "w": 208,
+        "h": 245
+      },
+      "entityId": "zhongyun",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "zhongyun.worried": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1306,
+        "y": 13,
+        "w": 201,
+        "h": 243
+      },
+      "entityId": "zhongyun",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "xuaunt.front": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 77,
+        "y": 261,
+        "w": 127,
+        "h": 249
+      },
+      "entityId": "xuaunt",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "xuaunt.side": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 322,
+        "y": 262,
+        "w": 119,
+        "h": 249
+      },
+      "entityId": "xuaunt",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "xuaunt.back": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 554,
+        "y": 261,
+        "w": 125,
+        "h": 249
+      },
+      "entityId": "xuaunt",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "xuaunt.neutral": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 777,
+        "y": 262,
+        "w": 218,
+        "h": 249
+      },
+      "entityId": "xuaunt",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "xuaunt.happy": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1043,
+        "y": 262,
+        "w": 219,
+        "h": 249
+      },
+      "entityId": "xuaunt",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "xuaunt.worried": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1298,
+        "y": 267,
+        "w": 216,
+        "h": 244
+      },
+      "entityId": "xuaunt",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "heqing.front": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 80,
+        "y": 513,
+        "w": 130,
+        "h": 254
+      },
+      "entityId": "heqing",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "heqing.side": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 311,
+        "y": 514,
+        "w": 150,
+        "h": 254
+      },
+      "entityId": "heqing",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "heqing.back": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 555,
+        "y": 514,
+        "w": 114,
+        "h": 253
+      },
+      "entityId": "heqing",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "heqing.neutral": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 773,
+        "y": 514,
+        "w": 230,
+        "h": 253
+      },
+      "entityId": "heqing",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "heqing.happy": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1038,
+        "y": 514,
+        "w": 231,
+        "h": 253
+      },
+      "entityId": "heqing",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "heqing.worried": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1308,
+        "y": 514,
+        "w": 210,
+        "h": 253
+      },
+      "entityId": "heqing",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "wenning.front": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 79,
+        "y": 771,
+        "w": 120,
+        "h": 250
+      },
+      "entityId": "wenning",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "wenning.side": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 319,
+        "y": 770,
+        "w": 111,
+        "h": 251
+      },
+      "entityId": "wenning",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "wenning.back": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 554,
+        "y": 771,
+        "w": 116,
+        "h": 250
+      },
+      "entityId": "wenning",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "wenning.neutral": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 770,
+        "y": 772,
+        "w": 222,
+        "h": 250
+      },
+      "entityId": "wenning",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "wenning.happy": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1038,
+        "y": 773,
+        "w": 222,
+        "h": 249
+      },
+      "entityId": "wenning",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "wenning.worried": {
+      "imageId": "npc_neighbors",
+      "rect": {
+        "x": 1299,
+        "y": 773,
+        "w": 216,
+        "h": 249
+      },
+      "entityId": "wenning",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "luning.front": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 80,
+        "y": 8,
+        "w": 123,
+        "h": 249
+      },
+      "entityId": "luning",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "luning.side": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 325,
+        "y": 8,
+        "w": 124,
+        "h": 249
+      },
+      "entityId": "luning",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "luning.back": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 583,
+        "y": 8,
+        "w": 112,
+        "h": 248
+      },
+      "entityId": "luning",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "luning.neutral": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 787,
+        "y": 14,
+        "w": 209,
+        "h": 243
+      },
+      "entityId": "luning",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "luning.happy": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1046,
+        "y": 14,
+        "w": 212,
+        "h": 243
+      },
+      "entityId": "luning",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "luning.worried": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1309,
+        "y": 17,
+        "w": 213,
+        "h": 240
+      },
+      "entityId": "luning",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "chenyu.front": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 68,
+        "y": 260,
+        "w": 132,
+        "h": 249
+      },
+      "entityId": "chenyu",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "chenyu.side": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 331,
+        "y": 261,
+        "w": 123,
+        "h": 248
+      },
+      "entityId": "chenyu",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "chenyu.back": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 579,
+        "y": 260,
+        "w": 124,
+        "h": 250
+      },
+      "entityId": "chenyu",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "chenyu.neutral": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 777,
+        "y": 265,
+        "w": 231,
+        "h": 248
+      },
+      "entityId": "chenyu",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "chenyu.happy": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1036,
+        "y": 266,
+        "w": 231,
+        "h": 246
+      },
+      "entityId": "chenyu",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "chenyu.worried": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1297,
+        "y": 270,
+        "w": 226,
+        "h": 242
+      },
+      "entityId": "chenyu",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "shenuncle.front": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 78,
+        "y": 513,
+        "w": 115,
+        "h": 250
+      },
+      "entityId": "shenuncle",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "shenuncle.side": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 327,
+        "y": 513,
+        "w": 111,
+        "h": 252
+      },
+      "entityId": "shenuncle",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "shenuncle.back": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 585,
+        "y": 513,
+        "w": 108,
+        "h": 251
+      },
+      "entityId": "shenuncle",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "shenuncle.neutral": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 783,
+        "y": 518,
+        "w": 229,
+        "h": 247
+      },
+      "entityId": "shenuncle",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "shenuncle.happy": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1032,
+        "y": 520,
+        "w": 238,
+        "h": 245
+      },
+      "entityId": "shenuncle",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "shenuncle.worried": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1289,
+        "y": 521,
+        "w": 238,
+        "h": 244
+      },
+      "entityId": "shenuncle",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "guxi.front": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 64,
+        "y": 766,
+        "w": 157,
+        "h": 249
+      },
+      "entityId": "guxi",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "guxi.side": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 320,
+        "y": 765,
+        "w": 146,
+        "h": 250
+      },
+      "entityId": "guxi",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "guxi.back": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 556,
+        "y": 766,
+        "w": 158,
+        "h": 248
+      },
+      "entityId": "guxi",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "guxi.neutral": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 772,
+        "y": 765,
+        "w": 250,
+        "h": 252
+      },
+      "entityId": "guxi",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "guxi.happy": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1032,
+        "y": 765,
+        "w": 249,
+        "h": 253
+      },
+      "entityId": "guxi",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "guxi.worried": {
+      "imageId": "npc_families",
+      "rect": {
+        "x": 1288,
+        "y": 765,
+        "w": 245,
+        "h": 253
+      },
+      "entityId": "guxi",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "doctorzhang.front": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 65,
+        "y": 7,
+        "w": 132,
+        "h": 246
+      },
+      "entityId": "doctorzhang",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "doctorzhang.side": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 302,
+        "y": 7,
+        "w": 136,
+        "h": 246
+      },
+      "entityId": "doctorzhang",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "doctorzhang.back": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 538,
+        "y": 7,
+        "w": 117,
+        "h": 245
+      },
+      "entityId": "doctorzhang",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "doctorzhang.neutral": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 739,
+        "y": 7,
+        "w": 233,
+        "h": 248
+      },
+      "entityId": "doctorzhang",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "doctorzhang.happy": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1016,
+        "y": 7,
+        "w": 231,
+        "h": 248
+      },
+      "entityId": "doctorzhang",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "doctorzhang.worried": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1284,
+        "y": 7,
+        "w": 225,
+        "h": 247
+      },
+      "entityId": "doctorzhang",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "fanggrandpa.front": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 44,
+        "y": 256,
+        "w": 173,
+        "h": 247
+      },
+      "entityId": "fanggrandpa",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "fanggrandpa.side": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 284,
+        "y": 257,
+        "w": 167,
+        "h": 246
+      },
+      "entityId": "fanggrandpa",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "fanggrandpa.back": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 515,
+        "y": 260,
+        "w": 169,
+        "h": 243
+      },
+      "entityId": "fanggrandpa",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "fanggrandpa.neutral": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 720,
+        "y": 263,
+        "w": 269,
+        "h": 238
+      },
+      "entityId": "fanggrandpa",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "fanggrandpa.happy": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1000,
+        "y": 263,
+        "w": 262,
+        "h": 238
+      },
+      "entityId": "fanggrandpa",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "fanggrandpa.worried": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1270,
+        "y": 260,
+        "w": 257,
+        "h": 241
+      },
+      "entityId": "fanggrandpa",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "panaunt.front": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 54,
+        "y": 511,
+        "w": 152,
+        "h": 249
+      },
+      "entityId": "panaunt",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "panaunt.side": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 293,
+        "y": 512,
+        "w": 143,
+        "h": 249
+      },
+      "entityId": "panaunt",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "panaunt.back": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 528,
+        "y": 511,
+        "w": 146,
+        "h": 249
+      },
+      "entityId": "panaunt",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "panaunt.neutral": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 731,
+        "y": 511,
+        "w": 251,
+        "h": 244
+      },
+      "entityId": "panaunt",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "panaunt.happy": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1006,
+        "y": 511,
+        "w": 242,
+        "h": 244
+      },
+      "entityId": "panaunt",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "panaunt.worried": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1279,
+        "y": 511,
+        "w": 239,
+        "h": 244
+      },
+      "entityId": "panaunt",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "xiehang.front": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 74,
+        "y": 763,
+        "w": 114,
+        "h": 252
+      },
+      "entityId": "xiehang",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "xiehang.side": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 312,
+        "y": 763,
+        "w": 115,
+        "h": 252
+      },
+      "entityId": "xiehang",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "xiehang.back": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 543,
+        "y": 762,
+        "w": 110,
+        "h": 253
+      },
+      "entityId": "xiehang",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "xiehang.neutral": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 751,
+        "y": 761,
+        "w": 208,
+        "h": 251
+      },
+      "entityId": "xiehang",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "xiehang.happy": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1019,
+        "y": 761,
+        "w": 216,
+        "h": 251
+      },
+      "entityId": "xiehang",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "xiehang.worried": {
+      "imageId": "npc_community",
+      "rect": {
+        "x": 1299,
+        "y": 761,
+        "w": 201,
+        "h": 251
+      },
+      "entityId": "xiehang",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "naipao.front": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 19,
+        "y": 65,
+        "w": 254,
+        "h": 269
+      },
+      "entityId": "naipao",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "naipao.side": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 270,
+        "y": 67,
+        "w": 314,
+        "h": 266
+      },
+      "entityId": "naipao",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "naipao.back": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 600,
+        "y": 61,
+        "w": 198,
+        "h": 273
+      },
+      "entityId": "naipao",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "naipao.neutral": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 815,
+        "y": 84,
+        "w": 232,
+        "h": 244
+      },
+      "entityId": "naipao",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "naipao.happy": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 1063,
+        "y": 86,
+        "w": 231,
+        "h": 241
+      },
+      "entityId": "naipao",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "naipao.worried": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 1306,
+        "y": 90,
+        "w": 224,
+        "h": 234
+      },
+      "entityId": "naipao",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "doubao.front": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 17,
+        "y": 358,
+        "w": 203,
+        "h": 297
+      },
+      "entityId": "doubao",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "doubao.side": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 238,
+        "y": 361,
+        "w": 357,
+        "h": 294
+      },
+      "entityId": "doubao",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "doubao.back": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 613,
+        "y": 361,
+        "w": 177,
+        "h": 293
+      },
+      "entityId": "doubao",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "doubao.neutral": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 824,
+        "y": 370,
+        "w": 221,
+        "h": 263
+      },
+      "entityId": "doubao",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "doubao.happy": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 1067,
+        "y": 370,
+        "w": 220,
+        "h": 265
+      },
+      "entityId": "doubao",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "doubao.worried": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 1305,
+        "y": 370,
+        "w": 219,
+        "h": 259
+      },
+      "entityId": "doubao",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "wuyun.front": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 25,
+        "y": 670,
+        "w": 237,
+        "h": 305
+      },
+      "entityId": "wuyun",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "wuyun.side": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 241,
+        "y": 677,
+        "w": 343,
+        "h": 298
+      },
+      "entityId": "wuyun",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "wuyun.back": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 598,
+        "y": 676,
+        "w": 192,
+        "h": 306
+      },
+      "entityId": "wuyun",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "wuyun.neutral": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 822,
+        "y": 692,
+        "w": 214,
+        "h": 269
+      },
+      "entityId": "wuyun",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "wuyun.happy": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 1068,
+        "y": 698,
+        "w": 219,
+        "h": 261
+      },
+      "entityId": "wuyun",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "wuyun.worried": {
+      "imageId": "pets_shop_cats_dog",
+      "rect": {
+        "x": 1313,
+        "y": 698,
+        "w": 209,
+        "h": 263
+      },
+      "entityId": "wuyun",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "zhima.front": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 45,
+        "y": 46,
+        "w": 198,
+        "h": 343
+      },
+      "entityId": "zhima",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "zhima.side": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 277,
+        "y": 51,
+        "w": 257,
+        "h": 336
+      },
+      "entityId": "zhima",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "zhima.back": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 561,
+        "y": 42,
+        "w": 187,
+        "h": 345
+      },
+      "entityId": "zhima",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "zhima.neutral": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 792,
+        "y": 98,
+        "w": 220,
+        "h": 289
+      },
+      "entityId": "zhima",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "zhima.happy": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 1045,
+        "y": 107,
+        "w": 212,
+        "h": 281
+      },
+      "entityId": "zhima",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "zhima.worried": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 1303,
+        "y": 106,
+        "w": 207,
+        "h": 282
+      },
+      "entityId": "zhima",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "nuomi.front": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 31,
+        "y": 433,
+        "w": 222,
+        "h": 254
+      },
+      "entityId": "nuomi",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "nuomi.side": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 283,
+        "y": 433,
+        "w": 244,
+        "h": 257
+      },
+      "entityId": "nuomi",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "nuomi.back": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 554,
+        "y": 436,
+        "w": 205,
+        "h": 251
+      },
+      "entityId": "nuomi",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "nuomi.neutral": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 783,
+        "y": 470,
+        "w": 237,
+        "h": 209
+      },
+      "entityId": "nuomi",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "nuomi.happy": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 1044,
+        "y": 477,
+        "w": 229,
+        "h": 199
+      },
+      "entityId": "nuomi",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "nuomi.worried": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 1297,
+        "y": 476,
+        "w": 222,
+        "h": 200
+      },
+      "entityId": "nuomi",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "manman.front": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 19,
+        "y": 737,
+        "w": 234,
+        "h": 222
+      },
+      "entityId": "manman",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "manman.side": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 268,
+        "y": 751,
+        "w": 305,
+        "h": 208
+      },
+      "entityId": "manman",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "manman.back": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 595,
+        "y": 743,
+        "w": 231,
+        "h": 215
+      },
+      "entityId": "manman",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "manman.neutral": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 853,
+        "y": 772,
+        "w": 199,
+        "h": 185
+      },
+      "entityId": "manman",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "manman.happy": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 1082,
+        "y": 771,
+        "w": 199,
+        "h": 185
+      },
+      "entityId": "manman",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "manman.worried": {
+      "imageId": "pets_small_animals",
+      "rect": {
+        "x": 1311,
+        "y": 773,
+        "w": 202,
+        "h": 184
+      },
+      "entityId": "manman",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "huangyou.front": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 60,
+        "y": 17,
+        "w": 150,
+        "h": 232
+      },
+      "entityId": "huangyou",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "huangyou.side": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 270,
+        "y": 17,
+        "w": 270,
+        "h": 234
+      },
+      "entityId": "huangyou",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "huangyou.back": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 590,
+        "y": 16,
+        "w": 145,
+        "h": 235
+      },
+      "entityId": "huangyou",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "huangyou.neutral": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 817,
+        "y": 36,
+        "w": 207,
+        "h": 204
+      },
+      "entityId": "huangyou",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "huangyou.happy": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1074,
+        "y": 36,
+        "w": 206,
+        "h": 206
+      },
+      "entityId": "huangyou",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "huangyou.worried": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1320,
+        "y": 48,
+        "w": 194,
+        "h": 191
+      },
+      "entityId": "huangyou",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "xiaoman.front": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 39,
+        "y": 259,
+        "w": 183,
+        "h": 233
+      },
+      "entityId": "xiaoman",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "xiaoman.side": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 284,
+        "y": 269,
+        "w": 244,
+        "h": 222
+      },
+      "entityId": "xiaoman",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "xiaoman.back": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 571,
+        "y": 265,
+        "w": 179,
+        "h": 226
+      },
+      "entityId": "xiaoman",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "xiaoman.neutral": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 786,
+        "y": 276,
+        "w": 253,
+        "h": 204
+      },
+      "entityId": "xiaoman",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "xiaoman.happy": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1052,
+        "y": 283,
+        "w": 243,
+        "h": 194
+      },
+      "entityId": "xiaoman",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "xiaoman.worried": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1307,
+        "y": 292,
+        "w": 217,
+        "h": 183
+      },
+      "entityId": "xiaoman",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "douding.front": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 46,
+        "y": 500,
+        "w": 177,
+        "h": 222
+      },
+      "entityId": "douding",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "douding.side": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 287,
+        "y": 508,
+        "w": 265,
+        "h": 213
+      },
+      "entityId": "douding",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "douding.back": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 576,
+        "y": 504,
+        "w": 162,
+        "h": 217
+      },
+      "entityId": "douding",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "douding.neutral": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 786,
+        "y": 521,
+        "w": 247,
+        "h": 186
+      },
+      "entityId": "douding",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "douding.happy": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1052,
+        "y": 525,
+        "w": 243,
+        "h": 182
+      },
+      "entityId": "douding",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "douding.worried": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1306,
+        "y": 534,
+        "w": 218,
+        "h": 173
+      },
+      "entityId": "douding",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "awen.front": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 36,
+        "y": 734,
+        "w": 173,
+        "h": 267
+      },
+      "entityId": "awen",
+      "role": "front",
+      "reviewRequired": true
+    },
+    "awen.side": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 228,
+        "y": 731,
+        "w": 356,
+        "h": 265
+      },
+      "entityId": "awen",
+      "role": "side",
+      "reviewRequired": true
+    },
+    "awen.back": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 591,
+        "y": 734,
+        "w": 138,
+        "h": 265
+      },
+      "entityId": "awen",
+      "role": "back",
+      "reviewRequired": true
+    },
+    "awen.neutral": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 772,
+        "y": 746,
+        "w": 255,
+        "h": 233
+      },
+      "entityId": "awen",
+      "role": "neutral",
+      "reviewRequired": true
+    },
+    "awen.happy": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1041,
+        "y": 748,
+        "w": 248,
+        "h": 231
+      },
+      "entityId": "awen",
+      "role": "happy",
+      "reviewRequired": true
+    },
+    "awen.worried": {
+      "imageId": "pets_visitors",
+      "rect": {
+        "x": 1296,
+        "y": 752,
+        "w": 228,
+        "h": 223
+      },
+      "entityId": "awen",
+      "role": "worried",
+      "reviewRequired": true
+    },
+    "owner.base": {
+      "imageId": "owner_base",
+      "rect": {
+        "x": 214,
+        "y": 129,
+        "w": 595,
+        "h": 1305
+      },
+      "entityId": "owner",
+      "role": "base",
+      "reviewRequired": true
+    },
+    "hair.chestnut_bob": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 16,
+        "y": 53,
+        "w": 316,
+        "h": 272
+      },
+      "entityId": "owner",
+      "role": "hair",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "hair.black_bun": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 347,
+        "y": 53,
+        "w": 283,
+        "h": 277
+      },
+      "entityId": "owner",
+      "role": "hair",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "hair.brown_waves": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 633,
+        "y": 55,
+        "w": 310,
+        "h": 301
+      },
+      "entityId": "owner",
+      "role": "hair",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "hair.honey_shoulder": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 950,
+        "y": 59,
+        "w": 288,
+        "h": 297
+      },
+      "entityId": "owner",
+      "role": "hair",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "top.ivory_blouse": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 23,
+        "y": 392,
+        "w": 311,
+        "h": 208
+      },
+      "entityId": "owner",
+      "role": "top",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "top.peach_short": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 357,
+        "y": 397,
+        "w": 252,
+        "h": 203
+      },
+      "entityId": "owner",
+      "role": "top",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "top.blue_stripe": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 630,
+        "y": 392,
+        "w": 302,
+        "h": 214
+      },
+      "entityId": "owner",
+      "role": "top",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "top.mustard_cardigan": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 943,
+        "y": 397,
+        "w": 295,
+        "h": 207
+      },
+      "entityId": "owner",
+      "role": "top",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "apron.sage_paw": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 36,
+        "y": 644,
+        "w": 270,
+        "h": 331
+      },
+      "entityId": "owner",
+      "role": "apron",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "apron.peach_flower": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 357,
+        "y": 644,
+        "w": 255,
+        "h": 331
+      },
+      "entityId": "owner",
+      "role": "apron",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "apron.blue_flower": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 651,
+        "y": 644,
+        "w": 274,
+        "h": 331
+      },
+      "entityId": "owner",
+      "role": "apron",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "apron.oatmeal_pockets": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 960,
+        "y": 641,
+        "w": 268,
+        "h": 334
+      },
+      "entityId": "owner",
+      "role": "apron",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "shoes.brown_boots": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 63,
+        "y": 1030,
+        "w": 223,
+        "h": 180
+      },
+      "entityId": "owner",
+      "role": "shoes",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "shoes.cream_sneakers": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 370,
+        "y": 1056,
+        "w": 222,
+        "h": 154
+      },
+      "entityId": "owner",
+      "role": "shoes",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "shoes.brown_straps": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 666,
+        "y": 1058,
+        "w": 227,
+        "h": 152
+      },
+      "entityId": "owner",
+      "role": "shoes",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "shoes.slate_canvas": {
+      "imageId": "owner_wardrobe",
+      "rect": {
+        "x": 969,
+        "y": 1067,
+        "w": 237,
+        "h": 143
+      },
+      "entityId": "owner",
+      "role": "shoes",
+      "reviewRequired": true,
+      "requiresAlignment": true
+    },
+    "interior.japanese_wood": {
+      "imageId": "shop_interiors_six",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 509,
+        "h": 509
+      },
+      "entityId": "japanese_wood",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "interior.nordic_nature": {
+      "imageId": "shop_interiors_six",
+      "rect": {
+        "x": 515,
+        "y": 0,
+        "w": 506,
+        "h": 509
+      },
+      "entityId": "nordic_nature",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "interior.vintage_academy": {
+      "imageId": "shop_interiors_six",
+      "rect": {
+        "x": 1027,
+        "y": 0,
+        "w": 509,
+        "h": 509
+      },
+      "entityId": "vintage_academy",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "interior.modern_minimal": {
+      "imageId": "shop_interiors_six",
+      "rect": {
+        "x": 0,
+        "y": 515,
+        "w": 509,
+        "h": 509
+      },
+      "entityId": "modern_minimal",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "interior.soft_industrial": {
+      "imageId": "shop_interiors_six",
+      "rect": {
+        "x": 515,
+        "y": 515,
+        "w": 506,
+        "h": 509
+      },
+      "entityId": "soft_industrial",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "interior.cute_pets": {
+      "imageId": "shop_interiors_six",
+      "rect": {
+        "x": 1027,
+        "y": 515,
+        "w": 509,
+        "h": 509
+      },
+      "entityId": "cute_pets",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "location.residential": {
+      "imageId": "locations_four",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 764,
+        "h": 508
+      },
+      "entityId": "residential",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "location.old_town": {
+      "imageId": "locations_four",
+      "rect": {
+        "x": 772,
+        "y": 0,
+        "w": 764,
+        "h": 508
+      },
+      "entityId": "old_town",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "location.university": {
+      "imageId": "locations_four",
+      "rect": {
+        "x": 0,
+        "y": 516,
+        "w": 764,
+        "h": 508
+      },
+      "entityId": "university",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "location.clinic": {
+      "imageId": "locations_four",
+      "rect": {
+        "x": 772,
+        "y": 516,
+        "w": 764,
+        "h": 508
+      },
+      "entityId": "clinic",
+      "role": "background",
+      "reviewRequired": true
+    },
+    "opening.street": {
+      "imageId": "opening_street",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 2172,
+        "h": 724
+      },
+      "entityId": null,
+      "role": "background",
+      "reviewRequired": true
+    }
+  }
+}

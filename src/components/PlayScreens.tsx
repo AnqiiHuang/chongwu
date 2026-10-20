@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { DAHUANG_STEPS, FLORIST_STEPS, WUYUN_STEPS } from '../content/events';
-import { CUSTOMERS, DECOR, EMPLOYEES, ITEMS, PETS, PORTRAITS, SERVICES, SLOT_LABEL, TRAIN_COSTS, portraitOf, styleOf } from '../content/world';
+import { CUSTOMERS, DECOR, EMPLOYEES, ITEMS, PETS, SERVICES, SLOT_LABEL, TRAIN_COSTS } from '../content/world';
 import { availableQty, monthTotals, profitOf } from '../game/economy';
 import { createNewGame } from '../game/initial';
 import { parseGame } from '../game/save';
 import { actionsLeft, dateLabel, onDuty, seasonOf, SEASON_LABEL, timeLabel, WEATHER_LABEL, xpToNext } from '../game/time';
 import type { Action, ActionCategory, AdResult, GameState } from '../game/types';
 import { readBackup } from '../services/storage';
-import { Chibi, Paw, PetArt, ShopScene } from './Illustrations';
+import { Chibi, Paw, PetArt } from './Illustrations';
+import { AssetSprite, OwnerPortrait, PixelShop, SpritePortrait, StandingSprite } from './sprites';
+import { readShell, writeShell } from '../game/draft';
+import { activeEmployees, dailyWage, isHireId, STAFF_FRAME } from '../game/roster';
 
 const CATEGORIES: { id: ActionCategory; title: string; text: string }[] = [
   { id: 'customer', title: '接待来客', text: '咨询、护理预约和熟客的故事' },
@@ -25,11 +28,10 @@ export function StatusBar({ state, onProfile }: { state: GameState; onProfile: (
   const player = state.player;
   if (!shop || !calendar || !player) return null;
   const left = actionsLeft(state.actionIndex);
-  const portrait = portraitOf(player.portraitId);
   return (
     <header className="status">
       <button className="avatar-btn" type="button" onClick={onProfile} aria-label="查看店主和员工">
-        <Chibi look={portrait.look} label={player.name} />
+        {player.appearance && <span className="avatar-crop"><OwnerPortrait appearance={player.appearance} size={64} label={player.name} /></span>}
       </button>
       <div>
         <div className="spread">
@@ -61,24 +63,22 @@ export function HomeScreen({
 }) {
   const shop = state.shop!;
   const calendar = state.calendar!;
-  const style = styleOf(shop.style);
-  const duty = Object.values(EMPLOYEES).filter((employee) => onDuty(employee.id, state.actionIndex));
+  const duty = activeEmployees(state).filter((id) => onDuty(id, state.actionIndex));
   return (
     <div className="scroll">
       <div className="scene-wrap">
-        <ShopScene
+        <PixelShop
+          styleId={shop.style}
           shopName={shop.name}
-          style={style}
           weather={calendar.weather}
+          appearance={state.player?.appearance ?? null}
+          staffIds={duty}
+          showPets
           warmLight={shop.warmLight}
-          equipped={shop.equipped}
-          owner={portraitOf(state.player!.portraitId).look}
-          staff={duty.map((employee) => employee.look)}
         />
       </div>
       <p className="tiny muted">
-        {state.actionIndex >= 5 ? '已经关门。' : duty.length ? `在岗：${duty.map((employee) => employee.name).join('、')}` : '这个时段没有员工在班，店主看着店。'}
-        {' '}当前是矢量占位形象。
+        {state.actionIndex >= 5 ? '已经关门。' : duty.length ? `在岗：${duty.map((id) => EMPLOYEES[id]?.name).join('、')}` : '这个时段没有员工在班，店主看着店。'}
       </p>
       <div className="metrics">
         <MetricButton label="人气" value={shop.popularity} color="#a8d5ba" onClick={() => onMetric('popularity')} />
@@ -134,8 +134,17 @@ export function EventScreen({ state, dispatch }: { state: GameState; dispatch: (
     <>
       <div className="scroll">
         <div className="event-art">
-          {look && <Chibi look={look} label={character && 'name' in character ? character.name : '人物'} />}
-          {event.petId && <PetArt id={event.petId} label={PETS.find((pet) => pet.id === event.petId)?.name ?? '宠物'} />}
+          {event.characterId && isHireId(event.characterId) && (
+            <SpritePortrait frameId={STAFF_FRAME[event.characterId].replace('.front', '.neutral')} size={120} label={EMPLOYEES[event.characterId]?.name ?? '店员'} />
+          )}
+          {look && !(event.characterId && isHireId(event.characterId)) && (
+            <Chibi look={look} label={character && 'name' in character ? character.name : '人物'} />
+          )}
+          {event.petId && (['dahuang', 'naipao', 'doubao', 'wuyun', 'zhima', 'nuomi'].includes(event.petId) ? (
+            <AssetSprite frameId={`${event.petId}.front`} height={84} label={PETS.find((pet) => pet.id === event.petId)?.name ?? '宠物'} />
+          ) : (
+            <PetArt id={event.petId} label={PETS.find((pet) => pet.id === event.petId)?.name ?? '宠物'} />
+          ))}
         </div>
         <article className="event-card">
           {event.coach && <p className="tiny muted">{event.coach}</p>}
@@ -202,14 +211,14 @@ export function SummaryScreen({
       {state.star2 && state.star2DayId === state.calendar?.dayId && <div className="seal">二星</div>}
       {!state.star2 && state.star1 && state.history.length === 1 && <div className="seal">一星</div>}
       <div className="scene-wrap">
-        <ShopScene
+        <PixelShop
+          styleId={shop.style}
           shopName={shop.name}
-          style={styleOf(shop.style)}
           weather={state.calendar!.weather}
+          appearance={state.player?.appearance ?? null}
+          staffIds={activeEmployees(state).filter((id) => onDuty(id, state.actionIndex))}
+          showPets
           warmLight={shop.warmLight}
-          equipped={shop.equipped}
-          owner={portraitOf(state.player!.portraitId).look}
-          staff={[]}
         />
       </div>
       <p>{ledger.photoCaption}</p>
@@ -292,7 +301,7 @@ export function PetsScreen({ state, dispatch }: { state: GameState; dispatch: (a
             <article key={pet.id} className="card" style={{ marginTop: 0 }}>
               <button className="btn" type="button" onClick={() => setOpen(open === pet.id ? null : pet.id)} style={{ boxShadow: 'none', padding: 0 }}>
                 <div className="inline">
-                  <span className={wiggle === pet.id ? 'wag' : undefined}><PetArt id={pet.id} label={pet.name} /></span>
+                  <span className={wiggle === pet.id ? 'wag' : undefined}><AssetSprite frameId={`${pet.id}.front`} height={72} label={pet.name} /></span>
                   <span>
                     <strong>{pet.name}</strong>
                     <span className="tiny muted" style={{ display: 'block' }}>{pet.species} · {pet.zone}</span>
@@ -349,7 +358,8 @@ export function DecorScreen({
   return (
     <div className="scroll">
       <h2 className="screen-title">布置</h2>
-      <p className="tiny muted">位置是固定的。已经拥有的东西可以换上，不重复付钱，也不消耗行动。</p>
+      <PixelShop styleId={shop.style} shopName={shop.name} weather={state.calendar?.weather ?? 'sunny'} appearance={null} staffIds={[]} showPets={false} warmLight={shop.warmLight} />
+      <p className="tiny muted">房间跟着装修走。背景里的家具是画好的，买下的小东西记在下面，不重复付钱，也不消耗行动。</p>
       <div className="stack">
         {(Object.keys(SLOT_LABEL) as (keyof typeof SLOT_LABEL)[]).map((slot) => {
           const equipped = shop.equipped[slot];
@@ -572,6 +582,16 @@ export function JournalScreen({ state, dispatch }: { state: GameState; dispatch:
           <button className="btn" type="button" onClick={() => dispatch({ type: 'SET_SETTINGS', reduceMotion: !state.settings.reduceMotion })}>
             减少动态：{state.settings.reduceMotion ? '开着' : '关着'}
           </button>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => {
+              dispatch({ type: 'SET_SETTINGS', replayIntro: true });
+              writeShell(localStorage, { ...readShell(localStorage), replay: true, introSeen: false });
+            }}
+          >
+            下次打开时重看开场
+          </button>
           <button className="btn ghost" type="button" onClick={() => exportSave(state)}>导出存档</button>
           <label className="btn ghost">
             导入存档
@@ -658,26 +678,30 @@ function TrainButton({ state, employeeId, dispatch }: { state: GameState; employ
 export function ProfileSheet({ state, dispatch, onClose }: { state: GameState; dispatch: (action: Action) => void; onClose: () => void }) {
   const player = state.player;
   if (!player) return null;
-  const portrait = PORTRAITS.find((item) => item.id === player.portraitId) ?? PORTRAITS[0]!;
   return (
     <div className="sheet-layer" role="dialog" aria-label="店主资料">
       <div className="sheet">
         <div className="inline">
-          <Chibi className="mini-portrait" look={portrait.look} label={player.name} />
+          <span className="avatar-crop lg">{player.appearance && <OwnerPortrait appearance={player.appearance} size={168} label={player.name} />}</span>
           <div>
             <strong>{player.name}</strong>
-            <p className="tiny">女性 · {player.age} 岁 · {player.heightCm} cm</p>
+            <p className="tiny">女性 · {player.age} 岁</p>
             <p className="tiny">{player.hair}，{player.outfit}</p>
           </div>
         </div>
         <h3>当班与培训</h3>
-        {Object.values(EMPLOYEES).map((employee) => (
-          <article key={employee.id} className="card">
-            <strong>{employee.name} · {employee.role}</strong>
-            <p className="tiny">{employee.shiftStart}–{employee.shiftEnd} · {state.calendar && onDuty(employee.id, state.actionIndex) ? '现在在店里' : '这个时段不在班'}</p>
-            <TrainButton state={state} employeeId={employee.id} dispatch={dispatch} />
-          </article>
-        ))}
+        <p className="tiny">每天预提工资 {dailyWage(state.employees)}。没入职的人不排班，也不领工资。</p>
+        {Object.values(EMPLOYEES).map((employee) => {
+          const hired = !!state.employees[employee.id];
+          return (
+            <article key={employee.id} className="card">
+              {isHireId(employee.id) && <StandingSprite frameId={STAFF_FRAME[employee.id]} bodyHeight={150} label={employee.name} />}
+              <strong>{employee.name} · {employee.role}</strong>
+              <p className="tiny">{hired ? `${employee.shiftStart}–${employee.shiftEnd} · ${state.calendar && onDuty(employee.id, state.actionIndex) ? '现在在店里' : '这个时段不在班'}` : '还没入职。不会出现在店里，也不会替班。'}</p>
+              {hired && <TrainButton state={state} employeeId={employee.id} dispatch={dispatch} />}
+            </article>
+          );
+        })}
         <button className="btn primary" type="button" onClick={onClose}>回到店里</button>
       </div>
     </div>

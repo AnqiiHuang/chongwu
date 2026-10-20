@@ -18,12 +18,12 @@ export interface StyleDef {
 }
 
 export const STYLES: StyleDef[] = [
-  { id: 'wood', name: '日系原木', text: '浅木柜台、棉布帘，和一盆不挡路的绿植。', wall: '#F6E6D4', wood: '#C4A574', cloth: '#D7E8DC', sign: '#8FBF9F', accent: '#E7B89A' },
-  { id: 'nordic', name: '北欧自然', text: '留白多一点，亚麻和绿意都轻。', wall: '#F7F4EF', wood: '#D2C4B0', cloth: '#E3EEE6', sign: '#A9C3B2', accent: '#E6D3B3' },
-  { id: 'academy', name: '复古宠物学院', text: '像小镇绘本里的旧教室，有小旗帜和软木色。', wall: '#F8E7D6', wood: '#B08968', cloth: '#E7D2C0', sign: '#C48B6A', accent: '#E8C56B' },
-  { id: 'modern', name: '现代简约', text: '线条少，圆角和杏桃色仍然温暖。', wall: '#F4F1EC', wood: '#E2D0C0', cloth: '#F6E0D8', sign: '#E3B7A8', accent: '#F3D48A' },
-  { id: 'workshop', name: '轻工业', text: '浅木和暖铜小灯，不是冷冰冰的车间。', wall: '#F6F0E6', wood: '#D7C4A3', cloth: '#F3D5CB', sign: '#D2A679', accent: '#E7C98A' },
-  { id: 'cute', name: '可爱宠物', text: '爪印布帘、杏桃粉，招牌也是圆的。', wall: '#FFF1E8', wood: '#E8C8A4', cloth: '#F7D5CC', sign: '#F0B5A6', accent: '#F6D88B' },
+  { id: 'japanese_wood', name: '日系原木治愈风', text: '木梁、暖木货架、爪印地毯、暖色窗光。', wall: '#F6E6D4', wood: '#C4A574', cloth: '#D7E8DC', sign: '#8FBF9F', accent: '#E7B89A' },
+  { id: 'nordic_nature', name: '北欧自然风', text: '大窗、浅木地板、藤编灯、绿植和浅色家具。', wall: '#F7F4EF', wood: '#D2C4B0', cloth: '#E3EEE6', sign: '#A9C3B2', accent: '#E6D3B3' },
+  { id: 'vintage_academy', name: '复古宠物学院风', text: '拱窗、深木书柜、格纹软装、黑板与小旗。', wall: '#F8E7D6', wood: '#B08968', cloth: '#E7D2C0', sign: '#C48B6A', accent: '#E8C56B' },
+  { id: 'modern_minimal', name: '现代简约风', text: '弧形窗、奶油墙面、圆角浅木柜台、简洁留白。', wall: '#F4F1EC', wood: '#E2D0C0', cloth: '#F6E0D8', sign: '#E3B7A8', accent: '#F3D48A' },
+  { id: 'soft_industrial', name: '轻工业风', text: '红砖、黑铁货架、木台面、暖灯与绿植。', wall: '#F6F0E6', wood: '#D7C4A3', cloth: '#F3D5CB', sign: '#D2A679', accent: '#E7C98A' },
+  { id: 'cute_pets', name: '可爱宠物风', text: '桃粉窗帘、爪印地毯、圆形软垫、可爱货架。', wall: '#FFF1E8', wood: '#E8C8A4', cloth: '#F7D5CC', sign: '#F0B5A6', accent: '#F6D88B' },
 ];
 
 export interface AddressDef {
@@ -31,15 +31,78 @@ export interface AddressDef {
   name: string;
   trait: string;
   tendency: string;
+  advantage: string;
+  drawback: string;
   revenueMod: number;
   rent: number;
+  bondMod: number;
+  visitorMod: number;
+  weekendVisitorMod: number;
+  careVisitorMod: number;
+  retailVisitorMod: number;
 }
 
 export const ADDRESSES: AddressDef[] = [
-  { id: 'community', name: '中高端社区底商', trait: '客人更在意预约、环境和细致护理。', tendency: '客单价稍高，租金也稍高。', revenueMod: 1.12, rent: 115 },
-  { id: 'oldtown', name: '老城区步行街转角铺', trait: '熟客多，邻里愿意停下来聊天。', tendency: '羁绊更容易积累。', revenueMod: 1, rent: 90 },
-  { id: 'campus', name: '大学城周边商铺', trait: '客人喜欢实用的东西，周末更热闹。', tendency: '对价格敏感一些。', revenueMod: 0.9, rent: 95 },
-  { id: 'hospital', name: '宠物医院旁', trait: '客人更信任安静护理和清楚的转介。', tendency: '预约和医院合作会更早遇到。', revenueMod: 1.05, rent: 105 },
+  {
+    id: 'residential',
+    name: '中高端社区底商',
+    trait: '社区门口，散步家庭来往稳定。',
+    tendency: '预约服务较多。',
+    advantage: '预约服务较多；客单价初值 +10%。',
+    drawback: '租金初值 +15%；更重视服务细节。',
+    revenueMod: 1.1,
+    rent: 115,
+    bondMod: 1,
+    visitorMod: 0,
+    weekendVisitorMod: 0,
+    careVisitorMod: 0,
+    retailVisitorMod: 0,
+  },
+  {
+    id: 'old_town',
+    name: '老城区步行街转角铺',
+    trait: '有树荫与老邻居的小转角。',
+    tendency: '邻里愿意停下来聊天。',
+    advantage: '租金 -10%；社区羁绊收益 +10%。',
+    drawback: '基础自然客流 -5%。',
+    revenueMod: 1,
+    rent: 90,
+    bondMod: 1.1,
+    visitorMod: -0.05,
+    weekendVisitorMod: 0,
+    careVisitorMod: 0,
+    retailVisitorMod: 0,
+  },
+  {
+    id: 'university',
+    name: '大学城周边商铺',
+    trait: '校园附近，周末热闹。',
+    tendency: '实用商品好卖，预算更敏感。',
+    advantage: '周末自然客流 +15%；实用商品好卖。',
+    drawback: '平均客单价 -10%；预算敏感。',
+    revenueMod: 0.9,
+    rent: 100,
+    bondMod: 1,
+    visitorMod: 0,
+    weekendVisitorMod: 0.15,
+    careVisitorMod: 0,
+    retailVisitorMod: 0,
+  },
+  {
+    id: 'clinic',
+    name: '宠物医院旁',
+    trait: '安静护理与医院转介比较常见。',
+    tendency: '选在这里不等于自动得到医疗资格。',
+    advantage: '护理类来客权重 +15%。',
+    drawback: '租金 +5%；普通零售客占比相应降低。',
+    revenueMod: 1,
+    rent: 105,
+    bondMod: 1,
+    visitorMod: 0,
+    weekendVisitorMod: 0,
+    careVisitorMod: 0.15,
+    retailVisitorMod: -0.15,
+  },
 ];
 
 export const ADDRESS_MAP: Record<AddressId, AddressDef> = Object.fromEntries(
@@ -141,7 +204,7 @@ export const EMPLOYEES: Record<string, EmployeeDef> = {
     age: 26,
     role: '美容师',
     lookText: '丸子头，蜜桃围裙，细心，爱笑。',
-    duty: '洗护、修甲、基础梳理。',
+    duty: '细心、爱笑。基础梳理和美容预约。',
     shiftStart: '09:00',
     shiftEnd: '17:00',
     look: { hairStyle: 'bun', hairColor: '#3D342C', apron: '#F4B8A4', shirt: '#F8E7D8', glasses: false, accent: '#E7A15A' },
@@ -152,7 +215,7 @@ export const EMPLOYEES: Record<string, EmployeeDef> = {
     age: 29,
     role: '护理员',
     lookText: '短发，浅绿马甲，沉稳温和。',
-    duty: '日常观察、清洁、转诊记录。不诊断，不打针。',
+    duty: '沉稳。日常观察、环境和护理记录。不诊断，不打针。',
     shiftStart: '11:00',
     shiftEnd: '19:00',
     look: { hairStyle: 'short', hairColor: '#3F3A36', apron: '#C9E2D4', shirt: '#F4F0E8', glasses: false, accent: '#8FBF9F' },
@@ -163,7 +226,7 @@ export const EMPLOYEES: Record<string, EmployeeDef> = {
     age: 23,
     role: '销售顾问',
     lookText: '卷发，圆框眼镜，健谈，但不强推。',
-    duty: '询问需求、介绍商品。客人拒绝也没关系。',
+    duty: '健谈，重视需求。商品和常客记录。客人拒绝也没关系。',
     shiftStart: '14:30',
     shiftEnd: '22:30',
     look: { hairStyle: 'curly', hairColor: '#6B442F', apron: '#F6E3A1', shirt: '#F7F1E8', glasses: true, accent: '#E2B56A' },

@@ -1,12 +1,33 @@
 import { describe, expect, it } from 'vitest';
 import { prepareEvent, listTemplates } from '../content/events';
 import { applyMorning, availableQty, monthTotals } from './economy';
-import { createNewGame } from './initial';
+import { createNewGame, initialEmployees } from './initial';
 import { gameReducer } from './reducer';
 import { parseGame, serializeGame } from './save';
 import { loadGame, persistGame, type Kv } from '../services/storage';
 import { canStartRewarded, emptyAdFrequency, noteRewarded, realAdsAllowed, shouldShowRewardEntry, interstitialEnabled } from '../services/ads';
-import type { ActionCategory, GameState } from './types';
+import { emptyDraft, parseDraft, shopNameError } from './draft';
+import { dailyWage } from './roster';
+import type { ActionCategory, GameState, OnboardingDraft } from './types';
+
+function sampleDraft(ids = ['su_tao', 'lin_xu']): OnboardingDraft {
+  return {
+    schemaVersion: 1,
+    step: 'STAFF',
+    shopName: '茸茸小屋',
+    styleId: 'japanese_wood',
+    locationId: 'old_town',
+    ownerName: '祁见禾',
+    personalityId: 'kind',
+    appearance: {
+      hairId: 'hair.chestnut_bob',
+      topId: 'top.ivory_blouse',
+      apronId: 'apron.sage_paw',
+      shoesId: 'shoes.brown_boots',
+    },
+    selectedEmployeeIds: ids,
+  };
+}
 
 function memory(): Kv {
   const data = new Map<string, string>();
@@ -21,15 +42,8 @@ function memory(): Kv {
   };
 }
 
-function boot(seed = 7): GameState {
-  let state = createNewGame(seed);
-  state = gameReducer(state, { type: 'CONFIRM_NAME', name: '茸茸小屋' });
-  state = gameReducer(state, { type: 'SELECT_STYLE', style: 'wood' });
-  state = gameReducer(state, { type: 'CONFIRM_STYLE' });
-  state = gameReducer(state, { type: 'CONFIRM_ADDRESS' });
-  state = gameReducer(state, { type: 'CONFIRM_OWNER' });
-  state = gameReducer(state, { type: 'START_BUSINESS' });
-  return state;
+function boot(seed = 7, ids = ['su_tao', 'lin_xu']): GameState {
+  return gameReducer(createNewGame(seed), { type: 'BEGIN_SHOP', draft: sampleDraft(ids) });
 }
 
 const DAY1: { category: ActionCategory; choiceId: string }[] = [
@@ -57,21 +71,14 @@ describe('开张日', () => {
     }
   });
 
-  it('命名太短不会进入下一步', () => {
-    const state = gameReducer(createNewGame(1), { type: 'CONFIRM_NAME', name: '猫' });
-    expect(state.onboardingStep).toBe('name');
-    expect(state.notice).toContain('2');
-  });
-
-  it('地址在揭晓后刷新不变', () => {
-    let state = createNewGame(3);
-    state = gameReducer(state, { type: 'CONFIRM_NAME', name: '茸茸小屋' });
-    state = gameReducer(state, { type: 'SELECT_STYLE', style: 'cute' });
-    state = gameReducer(state, { type: 'CONFIRM_STYLE' });
-    const address = state.draft.addressId;
-    const restored = parseGame(serializeGame(state));
-    expect(restored?.draft.addressId).toBe(address);
-    expect(gameReducer(restored!, { type: 'CONFIRM_STYLE' }).draft.addressId).toBe(address);
+  it('店名太短不能开店，选定的地址会留在草稿里', () => {
+    expect(shopNameError('猫')).toContain('2');
+    const draft = { ...emptyDraft(), shopName: '茸茸小屋', styleId: 'cute_pets' as const, locationId: 'clinic' as const, step: 'LOCATION' as const };
+    const restored = parseDraft(JSON.stringify(draft));
+    expect(restored?.locationId).toBe('clinic');
+    expect(restored?.styleId).toBe('cute_pets');
+    const started = gameReducer(createNewGame(1), { type: 'BEGIN_SHOP', draft: { ...sampleDraft(), shopName: '猫' } });
+    expect(started.shop).toBeNull();
   });
 
   it('五次行动后进入日报，重复结算不会再扣钱', () => {
@@ -331,6 +338,52 @@ describe('一个月', () => {
     expect(month.profit).toBe(state.history[0]?.profit);
     expect(month.cash).toBe(state.history[0]?.cashDelta);
     expect(month.profit).not.toBe(month.cash);
+  });
+
+  it('正好两位店员，连点开店不会再建一份', () => {
+    const pair = boot(4, ['su_tao', 'tang_li']);
+    expect(Object.keys(pair.employees).sort()).toEqual(['su_tao', 'tang_li']);
+    expect(dailyWage(pair.employees)).toBe(230);
+    expect(dailyWage(boot(1, ['su_tao', 'lin_xu']).employees)).toBe(250);
+    expect(dailyWage(boot(1, ['lin_xu', 'tang_li']).employees)).toBe(220);
+    expect(gameReducer(createNewGame(1), { type: 'BEGIN_SHOP', draft: sampleDraft(['su_tao']) }).shop).toBeNull();
+    expect(gameReducer(createNewGame(1), { type: 'BEGIN_SHOP', draft: sampleDraft(['su_tao', 'lin_xu', 'tang_li']) }).shop).toBeNull();
+    expect(pair.employees.lin_xu).toBeUndefined();
+    const again = gameReducer(pair, { type: 'BEGIN_SHOP', draft: { ...sampleDraft(['lin_xu', 'tang_li']), shopName: '另一家' } });
+    expect(again.shop?.name).toBe('茸茸小屋');
+    expect(again.shop?.cash).toBe(pair.shop?.cash);
+    expect(again.actionIndex).toBe(0);
+  });
+
+  it('旧的三员工存档保留团队，并换成对应的装修和店址', () => {
+    const opened = boot();
+    const raw = JSON.parse(serializeGame({ ...opened, employees: initialEmployees(['su_tao', 'lin_xu', 'tang_li']) })) as {
+      saveVersion: number;
+      shop: { style: string; addressId: string };
+      player: { portraitId: string; appearance?: unknown };
+      employees: Record<string, unknown>;
+    };
+    raw.saveVersion = 1;
+    raw.shop.style = 'cute';
+    raw.shop.addressId = 'hospital';
+    raw.player.portraitId = 'p4';
+    delete raw.player.appearance;
+    const restored = parseGame(JSON.stringify(raw));
+    expect(restored?.saveVersion).toBe(2);
+    expect(restored?.shop?.style).toBe('cute_pets');
+    expect(restored?.shop?.addressId).toBe('clinic');
+    expect(restored?.player?.appearance.hairId).toBe('hair.honey_shoulder');
+    expect(Object.keys(restored?.employees ?? {})).toEqual(['su_tao', 'lin_xu', 'tang_li']);
+    expect(restored?.shop?.cash).toBe(20000);
+    expect(dailyWage(restored?.employees ?? {})).toBe(350);
+  });
+
+  it('没入职的员工不能被派去工作', () => {
+    const started = boot(7, ['lin_xu', 'tang_li']);
+    const prepared = prepareEvent(started, 'window_corner');
+    expect(prepared?.event.description).toContain('没有加入');
+    const evening = prepareEvent({ ...started, employees: boot().employees, actionIndex: 4 }, 'window_corner');
+    expect(evening?.event.choices.find((choice) => choice.id === 'staff')?.disabledReason).toContain('不在店里');
   });
 
   it('后来的动物开局不在店里，旧存档会补上', () => {

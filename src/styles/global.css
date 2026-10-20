@@ -364,3 +364,85 @@ button:focus-visible, input:focus-visible {
   animation: none !important;
   transition: none !important;
 }
+
+.pixel-sprite, .owner-doll, .pixel-scene-bg {
+  image-rendering: pixelated;
+  display: block;
+}
+.pixel-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #f6efe4;
+}
+.pixel-scene-bg, .scene-tint { position: absolute; inset: 0; }
+.pixel-scene-bg { background-repeat: no-repeat; }
+.scene-sign {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 3;
+  max-width: 70%;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: rgba(255, 248, 239, 0.9);
+  font-size: 14px;
+}
+.scene-actor {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+.floaty { animation: breathe 3.2s ease-in-out infinite; }
+.street-screen { min-height: 100%; display: flex; flex-direction: column; }
+.street-stage {
+  position: relative;
+  height: 58dvh;
+  min-height: 280px;
+  overflow: hidden;
+  background: #c9d7b8;
+}
+.street-stage img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  image-rendering: auto;
+}
+.street-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 40%, rgba(255, 244, 214, 0.18), transparent 42%);
+  animation: breathe 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+.skip { position: absolute; top: 12px; right: 12px; z-index: 2; }
+.street-copy { padding: 16px 16px calc(20px + env(safe-area-inset-bottom)); }
+.street-copy h1 { margin: 0 0 6px; font-size: 28px; line-height: 1.25; }
+.progress { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.progress span { font-size: 12px; color: #8a7b6a; }
+.progress .now, .progress .done { color: #24352c; font-weight: 700; }
+.style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.preview-frame, .doll-stage, .sign-board {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff8ef;
+  margin: 8px 0;
+}
+.sign-board { min-height: 72px; background: #e7c89a; color: #4b322c; font-weight: 700; }
+.avatar-crop { width: 64px; height: 64px; overflow: hidden; border-radius: 50%; display: block; background: #fff8ef; }
+.avatar-crop.lg { width: 168px; height: 168px; border-radius: 18px; }
+.align-studio { min-height: 100%; padding: 16px 16px 48px; }
+.align-layout { display: grid; grid-template-columns: minmax(180px, 280px) 1fr; gap: 12px; align-items: start; }
+.lineup { display: flex; align-items: flex-end; gap: 8px; overflow-x: auto; min-height: 220px; padding: 12px; border-radius: 16px; }
+.lineup .pixel-sprite { flex: 0 0 auto; }
+.combo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 4px; }
+@media (max-width: 640px) { .align-layout { grid-template-columns: 1fr; } }
+.create-flow { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+.tabs button { min-height: 48px; }

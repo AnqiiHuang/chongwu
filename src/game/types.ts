@@ -1,12 +1,32 @@
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
 
 export type Phase = 'onboarding' | 'open' | 'event' | 'result' | 'summary';
 export type OnboardingStep = 'name' | 'style' | 'address' | 'owner' | 'staff';
 export type Weather = 'sunny' | 'cloudy' | 'rain';
 export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 export type ActionCategory = 'customer' | 'care' | 'neighborhood';
-export type ShopStyle = 'wood' | 'nordic' | 'academy' | 'modern' | 'workshop' | 'cute';
-export type AddressId = 'community' | 'oldtown' | 'campus' | 'hospital';
+export type ShopStyle = 'japanese_wood' | 'nordic_nature' | 'vintage_academy' | 'modern_minimal' | 'soft_industrial' | 'cute_pets';
+export type AddressId = 'residential' | 'old_town' | 'university' | 'clinic';
+export type CreateStep = 'SHOP_NAME' | 'INTERIOR' | 'LOCATION' | 'OWNER' | 'STAFF';
+
+export interface Appearance {
+  hairId: string;
+  topId: string;
+  apronId: string;
+  shoesId: string;
+}
+
+export interface OnboardingDraft {
+  schemaVersion: number;
+  step: CreateStep;
+  shopName: string;
+  styleId: ShopStyle | null;
+  locationId: AddressId | null;
+  ownerName: string;
+  personalityId: PersonalityId | null;
+  appearance: Appearance;
+  selectedEmployeeIds: string[];
+}
 export type PersonalityId = 'kind' | 'careful' | 'bright' | 'calm';
 export type CareStatus = 'ok' | 'watch' | 'hospital';
 export type AdPlacement = 'day_end_bonus' | 'decor_materials' | 'day_transition';
@@ -32,6 +52,7 @@ export interface Player {
   personalityId: PersonalityId;
   hair: string;
   outfit: string;
+  appearance: Appearance;
 }
 
 export interface Shop {
@@ -228,6 +249,7 @@ export interface GameSettings {
   sfx: boolean;
   reduceMotion: boolean;
   audioPromptSeen: boolean;
+  replayIntro: boolean;
 }
 
 export interface GameState {
@@ -271,13 +293,7 @@ export interface GameState {
 }
 
 export type Action =
-  | { type: 'CONFIRM_NAME'; name: string }
-  | { type: 'SELECT_STYLE'; style: ShopStyle }
-  | { type: 'CONFIRM_STYLE' }
-  | { type: 'CONFIRM_ADDRESS' }
-  | { type: 'UPDATE_PLAYER'; name?: string; heightCm?: number; portraitId?: string; personalityId?: PersonalityId }
-  | { type: 'CONFIRM_OWNER' }
-  | { type: 'START_BUSINESS' }
+  | { type: 'BEGIN_SHOP'; draft: OnboardingDraft }
   | { type: 'OPEN_CATEGORY'; category: ActionCategory }
   | { type: 'CANCEL_EVENT' }
   | { type: 'CHOOSE'; choiceId: string }
@@ -290,7 +306,7 @@ export type Action =
   | { type: 'BUY_ITEM'; itemId: string }
   | { type: 'SET_RESTOCK'; budget?: number; itemId?: string }
   | { type: 'TOGGLE_WARM_LIGHT' }
-  | { type: 'SET_SETTINGS'; music?: boolean; sfx?: boolean; reduceMotion?: boolean; audioPromptSeen?: boolean }
+  | { type: 'SET_SETTINGS'; music?: boolean; sfx?: boolean; reduceMotion?: boolean; audioPromptSeen?: boolean; replayIntro?: boolean }
   | { type: 'CLEAR_NOTICE' }
   | { type: 'SHOW_NOTICE'; text: string }
   | { type: 'BEGIN_AD'; placement: AdPlacement; requestId: string }

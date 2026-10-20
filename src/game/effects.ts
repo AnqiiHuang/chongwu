@@ -65,16 +65,28 @@ export function finishEffects(base: Effects, state: GameState, category: ActionC
   effects.cashExpense = quoteExpense(effects.cashExpense, personality);
   if (personality === 'bright' && category === 'customer') effects.popularity += 1;
   if (personality === 'calm' && category === 'care') effects.community += 1;
-  const addressId = state.shop?.addressId;
-  if (addressId === 'oldtown' && effects.community > 0) effects.community += 1;
+  const address = state.shop ? ADDRESS_MAP[state.shop.addressId] : null;
+  if (address && effects.community > 0 && address.bondMod !== 1) {
+    effects.community = Math.round(effects.community * address.bondMod);
+  }
+  if (address && effects.visitors > 0 && address.visitorMod) {
+    effects.visitors = Math.max(0, Math.round(effects.visitors * (1 + address.visitorMod)));
+  }
   if (
-    addressId === 'campus' &&
+    address &&
+    effects.visitors > 0 &&
+    address.weekendVisitorMod &&
     category === 'customer' &&
     state.calendar &&
-    isWeekend(state.calendar) &&
-    effects.popularity > 0
+    isWeekend(state.calendar)
   ) {
-    effects.popularity += 1;
+    effects.visitors = Math.round(effects.visitors * (1 + address.weekendVisitorMod));
+  }
+  if (address && effects.visitors > 0 && category === 'care' && address.careVisitorMod) {
+    effects.visitors = Math.round(effects.visitors * (1 + address.careVisitorMod));
+  }
+  if (address && effects.visitors > 0 && category === 'customer' && address.retailVisitorMod) {
+    effects.visitors = Math.max(0, Math.round(effects.visitors * (1 + address.retailVisitorMod)));
   }
   if (effects.revenue > 0) effects.revenue = quoteRevenue(effects.revenue, state);
   return effects;

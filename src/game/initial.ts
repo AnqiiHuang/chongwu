@@ -1,7 +1,6 @@
-import { CUSTOMERS, EMPLOYEES, HEIGHTS, OWNER_NAMES, PERSONALITIES, PORTRAITS, portraitOf } from '../content/world';
+import { CUSTOMERS } from '../content/world';
 import { emptyLedger } from './economy';
-import { rollInt } from './rng';
-import { SAVE_VERSION, type CustomerState, type EmployeeState, type GameState, type InventoryBatch, type PetState, type Player, type Weather } from './types';
+import { SAVE_VERSION, type CustomerState, type EmployeeState, type GameState, type InventoryBatch, type PetState, type Weather } from './types';
 
 export function charLength(value: string): number {
   return [...value.trim()].length;
@@ -41,34 +40,12 @@ export function createNewGame(seed?: number): GameState {
     notice: null,
     levelNote: null,
     metricLog: { popularity: [], happiness: [], community: [] },
-    settings: { music: false, sfx: true, reduceMotion: false, audioPromptSeen: false },
+    settings: { music: false, sfx: true, reduceMotion: false, audioPromptSeen: false, replayIntro: false },
     restockedDayId: null,
     restock: { budget: 80, paused: [] },
     star1: false,
     star2: false,
     star2DayId: null,
-  };
-}
-
-export function rollPlayer(rngState: number): { player: Player; rngState: number } {
-  const nameRoll = rollInt(rngState, OWNER_NAMES.length);
-  const portraitRoll = rollInt(nameRoll.next, PORTRAITS.length);
-  const heightRoll = rollInt(portraitRoll.next, HEIGHTS.length);
-  const personalityRoll = rollInt(heightRoll.next, PERSONALITIES.length);
-  const portrait = portraitOf(PORTRAITS[portraitRoll.index]!.id);
-  const personality = PERSONALITIES[personalityRoll.index]!;
-  return {
-    rngState: personalityRoll.next,
-    player: {
-      name: OWNER_NAMES[nameRoll.index]!,
-      age: 22,
-      gender: 'female',
-      heightCm: HEIGHTS[heightRoll.index]!,
-      portraitId: portrait.id,
-      personalityId: personality.id,
-      hair: portrait.hair,
-      outfit: portrait.outfit,
-    },
   };
 }
 
@@ -92,10 +69,8 @@ export function initialCustomers(): Record<string, CustomerState> {
   );
 }
 
-export function initialEmployees(): Record<string, EmployeeState> {
-  return Object.fromEntries(
-    Object.keys(EMPLOYEES).map((id) => [id, { id, skill: 0, practice: 0, trainedToday: false }]),
-  );
+export function initialEmployees(ids: readonly string[]): Record<string, EmployeeState> {
+  return Object.fromEntries(ids.map((id) => [id, { id, skill: 0, practice: 0, trainedToday: false }]));
 }
 
 export function initialInventory(day: number): InventoryBatch[] {

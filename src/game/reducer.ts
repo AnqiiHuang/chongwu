@@ -1,5 +1,8 @@
+import { appearanceOk, partName } from '../content/appearance';
 import { DAY1_SCRIPT, refreshOffers } from '../content/events';
-import { ADDRESSES, DECOR_MAP, HEIGHTS, ITEM_MAP, PERSONALITIES, PORTRAITS, TRAIN_COSTS, portraitOf } from '../content/world';
+import { INTERIOR_MAP } from '../content/interiors';
+import { ADDRESS_MAP, DECOR_MAP, ITEM_MAP, PERSONALITIES, TRAIN_COSTS } from '../content/world';
+import { hireError, ownerNameError, shopNameError } from './draft';
 import { cashDelta } from './effects';
 import {
   addItem,
@@ -16,10 +19,11 @@ import {
   star2Ready,
   summaryFrom,
 } from './economy';
-import { charLength, createNewGame, diaryLine, initialCustomers, initialEmployees, initialInventory, initialPets, rollPlayer } from './initial';
+import { createNewGame, diaryLine, initialCustomers, initialEmployees, initialInventory, initialPets } from './initial';
+import { dailyWage, morningCrew } from './roster';
 import { rollInt } from './rng';
 import { isOpeningDay, makeCalendar, nextDate, onDuty, timeLabel } from './time';
-import { SAVE_VERSION, type Action, type Effects, type GameState, type Shop, type Weather } from './types';
+import { SAVE_VERSION, type Action, type Effects, type GameState, type OnboardingDraft, type Shop, type Weather } from './types';
 
 function bump(state: GameState, patch: Partial<GameState>): GameState {
   return { ...state, ...patch, revision: state.revision + 1 };
@@ -180,7 +184,7 @@ function settle(state: GameState): GameState {
   const utilitiesPlanned = 60;
   const utilPaid = Math.min(shop.cash, utilitiesPlanned);
   shop.cash -= utilPaid;
-  const wage = 350;
+  const wage = dailyWage(state.employees);
   const rent = rentOf(state);
   shop.wagePayable += wage;
   shop.rentPayable += rent;
@@ -255,7 +259,7 @@ function openDay(state: GameState, calendar: NonNullable<GameState['calendar']>,
   next = refreshOffers(next);
   const hint = isOpeningDay(calendar) ? DAY1_SCRIPT[next.scriptStep]?.hint : null;
   const weatherNote =
-    calendar.weather === 'rain' ? '今天有小雨。进门的爪子可能会带水，毛巾在架子上。' : '员工把水和饭准备好了。';
+    calendar.weather === 'rain' ? '今天有小雨。进门的爪子可能会带水，毛巾在架子上。' : `${morningCrew(state)}`;
   const storyBits = [
     next.storyFlags.florist_met && !next.storyFlags.florist_stand ? '花店和布丁' : '',
     next.storyFlags.dahuang_met && !next.storyFlags.sun_plate ? '大黄的窗边' : '',
@@ -266,72 +270,27 @@ function openDay(state: GameState, calendar: NonNullable<GameState['calendar']>,
   return bump(next, {});
 }
 
-function confirmName(state: GameState, raw: string): GameState {
-  if (state.phase !== 'onboarding' || state.onboardingStep !== 'name') return state;
-  const name = raw.trim();
-  const length = charLength(name);
-  if (length < 2 || length > 12) return bump(state, { notice: '店名用 2 到 12 个字。' });
-  return bump(state, { draft: { ...state.draft, shopName: name }, onboardingStep: 'style', notice: null });
-}
-
-function confirmStyle(state: GameState): GameState {
-  if (state.phase !== 'onboarding' || state.onboardingStep !== 'style' || !state.draft.style) return state;
-  if (state.draft.addressId) {
-    return bump(state, { onboardingStep: 'address', notice: null });
+function beginShop(state: GameState, draft: OnboardingDraft): GameState {
+  if (state.shop) return state;
+  const shopName = draft.shopName.trim();
+  const ownerName = draft.ownerName.trim();
+  const nameProblem = shopNameError(shopName);
+  const ownerProblem = ownerNameError(ownerName);
+  const staffProblem = hireError(draft.selectedEmployeeIds);
+  if (nameProblem || ownerProblem || staffProblem || !draft.styleId || !INTERIOR_MAP[draft.styleId] || !draft.locationId || !ADDRESS_MAP[draft.locationId]) {
+    return bump(state, { notice: nameProblem ?? ownerProblem ?? staffProblem ?? '装修和店址都要选定，才会开门。' });
   }
-  const rolled = rollInt(state.rngState, ADDRESSES.length);
-  const address = ADDRESSES[rolled.index]!;
-  return bump(state, {
-    rngState: rolled.next,
-    draft: { ...state.draft, addressId: address.id },
-    onboardingStep: 'address',
-    notice: null,
-  });
-}
-
-function confirmAddress(state: GameState): GameState {
-  if (state.phase !== 'onboarding' || state.onboardingStep !== 'address' || !state.draft.addressId) return state;
-  if (state.player) return bump(state, { onboardingStep: 'owner', notice: null });
-  const rolled = rollPlayer(state.rngState);
-  return bump(state, { rngState: rolled.rngState, player: rolled.player, onboardingStep: 'owner', notice: null });
-}
-
-function updatePlayer(state: GameState, action: Extract<Action, { type: 'UPDATE_PLAYER' }>): GameState {
-  if (state.onboardingStep !== 'owner' || !state.player) return state;
-  const player = { ...state.player };
-  if (action.name !== undefined) {
-    const name = action.name.trim();
-    if (charLength(name) < 2 || charLength(name) > 8) return bump(state, { notice: '店主名字用 2 到 8 个字。' });
-    player.name = name;
+  if (!draft.personalityId || !PERSONALITIES.some((item) => item.id === draft.personalityId) || !appearanceOk(draft.appearance)) {
+    return bump(state, { notice: '店主的性格和穿搭还没定好。' });
   }
-  if (action.heightCm !== undefined) {
-    if (!HEIGHTS.includes(action.heightCm)) return state;
-    player.heightCm = action.heightCm;
-  }
-  if (action.portraitId !== undefined) {
-    if (!PORTRAITS.some((item) => item.id === action.portraitId)) return state;
-    const portrait = portraitOf(action.portraitId);
-    player.portraitId = portrait.id;
-    player.hair = portrait.hair;
-    player.outfit = portrait.outfit;
-  }
-  if (action.personalityId !== undefined) {
-    if (!PERSONALITIES.some((item) => item.id === action.personalityId)) return state;
-    player.personalityId = action.personalityId;
-  }
-  return bump(state, { player, notice: null });
-}
-
-function startBusiness(state: GameState): GameState {
-  if (state.phase !== 'onboarding' || state.onboardingStep !== 'staff') return state;
-  if (!state.player || !state.draft.style || !state.draft.addressId || charLength(state.draft.shopName) < 2) return state;
   const weather = rollWeather(state.rngState);
   const calendar = makeCalendar(1, 3, 1, weather.weather);
   const pets = initialPets();
+  const employees = initialEmployees(draft.selectedEmployeeIds);
   const shop: Shop = {
-    name: state.draft.shopName,
-    style: state.draft.style,
-    addressId: state.draft.addressId,
+    name: shopName,
+    style: draft.styleId,
+    addressId: draft.locationId,
     cash: 20000,
     materials: 0,
     popularity: 18,
@@ -349,14 +308,27 @@ function startBusiness(state: GameState): GameState {
   const started: GameState = {
     ...state,
     rngState: weather.rngState,
+    onboardingStep: 'staff',
+    draft: { shopName, style: draft.styleId, addressId: draft.locationId },
+    player: {
+      name: ownerName,
+      age: 22,
+      gender: 'female',
+      heightCm: state.player?.heightCm ?? 165,
+      portraitId: 'custom',
+      personalityId: draft.personalityId,
+      hair: partName(draft.appearance.hairId),
+      outfit: `${partName(draft.appearance.topId)}，${partName(draft.appearance.apronId)}，${partName(draft.appearance.shoesId)}`,
+      appearance: draft.appearance,
+    },
     shop,
     pets,
     customers: initialCustomers(),
-    employees: initialEmployees(),
+    employees,
     inventory: initialInventory(calendar.absoluteDay),
     metricLog: {
       popularity: ['新店开张，街坊还在观望。'],
-      happiness: ['员工会做基础喂食，陪伴要你自己选。'],
+      happiness: ['在店的人会做基础喂食，陪伴要你自己选。'],
       community: ['你和这条街还不熟。'],
     },
   };
@@ -549,22 +521,8 @@ function setRestock(state: GameState, action: Extract<Action, { type: 'SET_RESTO
 
 export function gameReducer(state: GameState, action: Action): GameState {
   switch (action.type) {
-    case 'CONFIRM_NAME':
-      return confirmName(state, action.name);
-    case 'SELECT_STYLE':
-      if (state.phase !== 'onboarding' || state.onboardingStep !== 'style') return state;
-      return bump(state, { draft: { ...state.draft, style: action.style }, notice: null });
-    case 'CONFIRM_STYLE':
-      return confirmStyle(state);
-    case 'CONFIRM_ADDRESS':
-      return confirmAddress(state);
-    case 'UPDATE_PLAYER':
-      return updatePlayer(state, action);
-    case 'CONFIRM_OWNER':
-      if (state.onboardingStep !== 'owner' || !state.player || charLength(state.player.name) < 2) return state;
-      return bump(state, { onboardingStep: 'staff', notice: null });
-    case 'START_BUSINESS':
-      return startBusiness(state);
+    case 'BEGIN_SHOP':
+      return beginShop(state, action.draft);
     case 'OPEN_CATEGORY': {
       if (state.phase !== 'open' || state.actionIndex >= 5 || !state.calendar) return state;
       if (isOpeningDay(state.calendar)) {
@@ -645,6 +603,7 @@ export function gameReducer(state: GameState, action: Action): GameState {
           sfx: action.sfx ?? state.settings.sfx,
           reduceMotion: action.reduceMotion ?? state.settings.reduceMotion,
           audioPromptSeen: action.audioPromptSeen ?? state.settings.audioPromptSeen,
+          replayIntro: action.replayIntro ?? state.settings.replayIntro,
         },
       });
     case 'CLEAR_NOTICE':

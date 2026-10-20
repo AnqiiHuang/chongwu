@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Onboarding } from '../components/Onboarding';
+import { CreateFlow } from '../components/CreateFlow';
 import {
   AdSheet,
   DecorScreen,
@@ -13,10 +13,11 @@ import {
   StatusBar,
   SummaryScreen,
 } from '../components/PlayScreens';
+import { DRAFT_KEY, readShell } from '../game/draft';
 import { createNewGame } from '../game/initial';
 import { gameReducer } from '../game/reducer';
 import { parseGame } from '../game/save';
-import type { Action, AdPlacement, AdResult, GameState } from '../game/types';
+import type { Action, AdPlacement, AdResult, GameState, OnboardingDraft } from '../game/types';
 import {
   canStartRewarded,
   createRequestId,
@@ -70,38 +71,59 @@ function loadInitial(): { state: GameState; note: string | null } {
 
 export function GameApp() {
   const initial = useState(loadInitial)[0];
-  const [state, setState] = useState(initial.state);
+  const formal = initial.state.shop ? initial.state : null;
+  const [live, setLive] = useState<GameState | null>(null);
   const [bootNote, setBootNote] = useState(initial.note);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [conflict, setConflict] = useState<GameState | null>(null);
   const [tab, setTab] = useState<Tab>('shop');
   const [profile, setProfile] = useState(false);
   const [metric, setMetric] = useState<Metric | null>(null);
-  const ref = useRef(state);
-  ref.current = state;
+  const ref = useRef<GameState | null>(live);
+  ref.current = live;
   const showAds = shouldShowRewardEntry(import.meta.env.DEV, false);
 
   const dispatch = useCallback((action: Action): GameState => {
-    const next = gameReducer(ref.current, action);
-    if (next === ref.current) return next;
+    const current = ref.current ?? createNewGame();
+    const next = gameReducer(current, action);
+    if (next === current) return next;
     ref.current = next;
-    setState(next);
+    setLive(next);
     const saved = persistGame(localStorage, next);
     setSaveError(saved.ok ? null : saved.error);
-    if (next.settings.sfx && (action.type === 'CHOOSE' || action.type === 'START_BUSINESS' || action.type === 'CHECKIN_PET')) playChime();
+    if (next.settings.sfx && (action.type === 'CHOOSE' || action.type === 'CHECKIN_PET')) playChime();
     if (next.settings.sfx && (action.type === 'OPEN_CATEGORY' || action.type === 'START_NEXT_DAY' || action.type === 'CONTINUE')) playPage();
     return next;
   }, []);
 
+  function commitShop(draft: OnboardingDraft): boolean {
+    const shell = readShell(localStorage);
+    let next = gameReducer(createNewGame(), { type: 'BEGIN_SHOP', draft });
+    if (!next.shop) return false;
+    next = gameReducer(next, { type: 'SET_SETTINGS', reduceMotion: shell.reduceMotion, replayIntro: false });
+    const saved = persistGame(localStorage, next);
+    if (!saved.ok) {
+      setSaveError(saved.error);
+      return false;
+    }
+    try {
+      localStorage.removeItem(DRAFT_KEY);
+    } catch {
+      // 正式档已经写下。草稿留着也不会覆盖它。
+    }
+    ref.current = next;
+    setLive(next);
+    setSaveError(null);
+    return true;
+  }
+
   useEffect(() => {
-    const saved = persistGame(localStorage, ref.current);
-    setSaveError(saved.ok ? null : saved.error);
     const onPointer = () => unlockAudio();
     window.addEventListener('pointerdown', onPointer);
     const onStorage = (event: StorageEvent) => {
       if (event.key !== SAVE_KEY || !event.newValue) return;
       const parsed = parseGame(event.newValue);
-      if (parsed && parsed.revision > ref.current.revision) setConflict(parsed);
+      if (parsed && ref.current && parsed.revision > ref.current.revision) setConflict(parsed);
     };
     window.addEventListener('storage', onStorage);
     const timer = window.setInterval(() => {
@@ -117,13 +139,13 @@ export function GameApp() {
   }, []);
 
   useEffect(() => {
-    syncMusic(state.settings.music && state.phase !== 'onboarding');
-  }, [state.settings.music, state.phase]);
+    syncMusic(!!live && live.settings.music && live.phase !== 'onboarding');
+  }, [live]);
 
   useEffect(() => {
-    if (!state.calendar) return;
-    writeFreq(rememberGameDay(readFreq(), state.calendar.dayId, Date.now()));
-  }, [state.calendar?.dayId]);
+    if (!live?.calendar) return;
+    writeFreq(rememberGameDay(readFreq(), live.calendar.dayId, Date.now()));
+  }, [live?.calendar?.dayId]);
 
   function requestAd(placement: Extract<AdPlacement, 'day_end_bonus' | 'decor_materials'>): void {
     const gate = canStartRewarded(readFreq(), Date.now());
@@ -138,7 +160,7 @@ export function GameApp() {
   }
 
   function finishAd(result: AdResult): void {
-    const pending = ref.current.pendingAd;
+    const pending = ref.current?.pendingAd;
     if (!pending) return;
     resolveDevAd(pending.requestId, result);
     const next = dispatch({ type: 'RESOLVE_AD', result });
@@ -168,50 +190,55 @@ export function GameApp() {
         <h1>震惊！我开了一家宠物店</h1>
         <p>每天五次行动。把窗边、门口和街坊慢慢照顾热。</p>
       </aside>
-      <div className="phone" data-style={state.shop?.style ?? 'wood'} data-motion={state.settings.reduceMotion ? 'reduce' : 'ok'}>
-        {(bootNote || saveError || state.notice || conflict) && state.phase !== 'onboarding' && (
+      <div className="phone" data-style={live?.shop?.style ?? 'japanese_wood'} data-motion={live?.settings.reduceMotion || readShell(localStorage).reduceMotion ? 'reduce' : 'ok'}>
+        {!live ? (
+          <CreateFlow
+            save={formal}
+            bootNote={bootNote ?? saveError}
+            onContinue={() => {
+              if (!formal) return;
+              const saved = persistGame(localStorage, formal);
+              setSaveError(saved.ok ? null : saved.error);
+              if (saved.ok) setLive(formal);
+            }}
+            onCommit={commitShop}
+          />
+        ) : (
+          <>
+        {(bootNote || saveError || live.notice || conflict) && (
           <div className="banner">
             {bootNote && <p>{bootNote}</p>}
             {saveError && <p>{saveError}</p>}
-            {state.notice && <p>{state.notice}</p>}
+            {live.notice && <p>{live.notice}</p>}
             {conflict && <p>另一个页面写入了更新的进度。</p>}
             <div className="inline" style={{ marginTop: 8 }}>
-              {state.notice && <button className="btn ghost" type="button" onClick={() => dispatch({ type: 'CLEAR_NOTICE' })}>知道了</button>}
+              {live.notice && <button className="btn ghost" type="button" onClick={() => dispatch({ type: 'CLEAR_NOTICE' })}>知道了</button>}
               {bootNote && <button className="btn ghost" type="button" onClick={() => setBootNote(null)}>好</button>}
-              {saveError && <button className="btn ghost" type="button" onClick={() => exportSave(state)}>导出当前进度</button>}
+              {saveError && <button className="btn ghost" type="button" onClick={() => exportSave(live)}>导出当前进度</button>}
               {conflict && <button className="btn primary" type="button" onClick={() => { dispatch({ type: 'IMPORT_SAVE', state: conflict }); setConflict(null); }}>读取最新</button>}
             </div>
           </div>
         )}
-        {state.phase === 'onboarding' ? (
-          <>
-            {state.notice && state.onboardingStep !== 'name' && state.onboardingStep !== 'owner' && (
-              <div className="banner"><p>{state.notice}</p></div>
-            )}
-            <Onboarding state={state} dispatch={dispatch} />
-          </>
-        ) : (
-          <>
-            <StatusBar state={state} onProfile={() => setProfile(true)} />
-            {state.phase === 'event' || state.phase === 'result' ? (
-              <EventScreen state={state} dispatch={dispatch} />
-            ) : state.phase === 'summary' ? (
-              <SummaryScreen state={state} dispatch={dispatch} showAds={showAds} onAd={() => requestAd('day_end_bonus')} />
+            <StatusBar state={live} onProfile={() => setProfile(true)} />
+            {live.phase === 'event' || live.phase === 'result' ? (
+              <EventScreen state={live} dispatch={dispatch} />
+            ) : live.phase === 'summary' ? (
+              <SummaryScreen state={live} dispatch={dispatch} showAds={showAds} onAd={() => requestAd('day_end_bonus')} />
             ) : tab === 'pets' ? (
-              <PetsScreen state={state} dispatch={dispatch} />
+              <PetsScreen state={live} dispatch={dispatch} />
             ) : tab === 'decor' ? (
-              <DecorScreen state={state} dispatch={dispatch} showAds={showAds} onAd={() => requestAd('decor_materials')} />
+              <DecorScreen state={live} dispatch={dispatch} showAds={showAds} onAd={() => requestAd('decor_materials')} />
             ) : tab === 'journal' ? (
-              <JournalScreen state={state} dispatch={dispatch} />
+              <JournalScreen state={live} dispatch={dispatch} />
             ) : (
-              <HomeScreen state={state} dispatch={dispatch} onMetric={setMetric} />
+              <HomeScreen state={live} dispatch={dispatch} onMetric={setMetric} />
             )}
-            {state.phase === 'open' && nav}
+            {live.phase === 'open' && nav}
           </>
         )}
-        {profile && <ProfileSheet state={state} dispatch={dispatch} onClose={() => setProfile(false)} />}
-        {metric && <MetricSheet state={state} metric={metric} onClose={() => setMetric(null)} />}
-        {state.pendingAd && <AdSheet dev={showAds} onResult={finishAd} />}
+        {live && profile && <ProfileSheet state={live} dispatch={dispatch} onClose={() => setProfile(false)} />}
+        {live && metric && <MetricSheet state={live} metric={metric} onClose={() => setMetric(null)} />}
+        {live?.pendingAd && <AdSheet dev={showAds} onResult={finishAd} />}
       </div>
     </div>
   );
