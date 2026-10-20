@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
-// GitHub 仓库 AnqiiHuang/chongwu，项目页路径为 /chongwu/。
+// 项目页是 https://anqiihuang.github.io/chongwu/，base 必须是 /chongwu/。
 // 部署到域名根目录时，把 base 改成 '/'。
 export default defineConfig({
   base: '/chongwu/',
